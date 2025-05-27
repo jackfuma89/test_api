@@ -145,6 +145,10 @@ def get_by_contract(contract_code: str):
 def list_phones():
     return jsonify(list(phone_idx.keys())[:20])
 
+@app.route('/')
+def home():
+    return 'API is running', 200
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
