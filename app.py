@@ -140,6 +140,108 @@ def get_by_contract(contract_code: str):
     except Exception as e:
         logger.error(f"Error retrieving data for contract {contract_code}: {e}")
         abort(500, description="Internal error retrieving contract data")
+@app.route('/customer/numTec/<contract_code>', methods=['GET'])
+def get_num_tec(contract_code: str):
+    if contract_code not in contract_idx:
+        abort(404, description="Contract code not found")
+    try:
+        rec = df.loc[contract_idx[contract_code]]
+        value = int(rec.get("num_contact_tec", 0))
+        return jsonify({'num_contact_tec': value})
+    except Exception as e:
+        logger.error(f"Error retrieving numTec for {contract_code}: {e}")
+        abort(500, description="Internal error retrieving numTec")
+
+@app.route('/customer/numAmm/<contract_code>', methods=['GET'])
+def get_num_amm(contract_code: str):
+    if contract_code not in contract_idx:
+        abort(404, description="Contract code not found")
+    try:
+        rec = df.loc[contract_idx[contract_code]]
+        value = int(rec.get("num_contact_amm", 0))
+        return jsonify({'num_contact_amm': value})
+    except Exception as e:
+        logger.error(f"Error retrieving numAmm for {contract_code}: {e}")
+        abort(500, description="Internal error retrieving numAmm")
+
+@app.route('/customer/wifiActive/<contract_code>', methods=['GET'])
+def get_wifi_active(contract_code: str):
+    if contract_code not in contract_idx:
+        abort(404, description="Contract code not found")
+    try:
+        rec = df.loc[contract_idx[contract_code]]
+        value = int(rec.get("bb_active", 0))
+        return jsonify({'bb_active': value})
+    except Exception as e:
+        logger.error(f"Error retrieving wifiActive for {contract_code}: {e}")
+        abort(500, description="Internal error retrieving wifiActive")
+
+@app.route('/customer/userName/<contract_code>', methods=['GET'])
+def get_user_name(contract_code: str):
+    if contract_code not in contract_idx:
+        abort(404, description="Contract code not found")
+    try:
+        rec = df.loc[contract_idx[contract_code]]
+        value = rec.get("user_name", "")
+        return jsonify({'user_name': value})
+    except Exception as e:
+        logger.error(f"Error retrieving userName for {contract_code}: {e}")
+        abort(500, description="Internal error retrieving userName")
+
+
+@app.route('/phone/numTec/<phone>', methods=['GET'])
+def get_num_tec_by_phone(phone: str):
+    normalized_phone = normalize_phone(phone)
+    if normalized_phone not in phone_idx:
+        abort(404, description="Phone number not found")
+    try:
+        rec = df.loc[phone_idx[normalized_phone]]
+        value = int(rec.get("num_contact_tec", 0))
+        return jsonify({'num_contact_tec': value})
+    except Exception as e:
+        logger.error(f"Error retrieving numTec for phone {normalized_phone}: {e}")
+        abort(500, description="Internal error retrieving numTec")
+
+@app.route('/phone/numAmm/<phone>', methods=['GET'])
+def get_num_amm_by_phone(phone: str):
+    normalized_phone = normalize_phone(phone)
+    if normalized_phone not in phone_idx:
+        abort(404, description="Phone number not found")
+    try:
+        rec = df.loc[phone_idx[normalized_phone]]
+        value = int(rec.get("num_contact_amm", 0))
+        return jsonify({'num_contact_amm': value})
+    except Exception as e:
+        logger.error(f"Error retrieving numAmm for phone {normalized_phone}: {e}")
+        abort(500, description="Internal error retrieving numAmm")
+
+@app.route('/phone/wifiActive/<phone>', methods=['GET'])
+def get_wifi_active_by_phone(phone: str):
+    normalized_phone = normalize_phone(phone)
+    if normalized_phone not in phone_idx:
+        abort(404, description="Phone number not found")
+    try:
+        rec = df.loc[phone_idx[normalized_phone]]
+        value = int(rec.get("bb_active", 0))
+        return jsonify({'bb_active': value})
+    except Exception as e:
+        logger.error(f"Error retrieving wifiActive for phone {normalized_phone}: {e}")
+        abort(500, description="Internal error retrieving wifiActive")
+
+@app.route('/phone/userName/<phone>', methods=['GET'])
+def get_user_name_by_phone(phone: str):
+    normalized_phone = normalize_phone(phone)
+    if normalized_phone not in phone_idx:
+        abort(404, description="Phone number not found")
+    try:
+        rec = df.loc[phone_idx[normalized_phone]]
+        value = rec.get("user_name", "")
+        return jsonify({'user_name': value})
+    except Exception as e:
+        logger.error(f"Error retrieving userName for phone {normalized_phone}: {e}")
+        abort(500, description="Internal error retrieving userName")
+
+
 
 @app.route('/debug/phones', methods=['GET'])
 def list_phones():
