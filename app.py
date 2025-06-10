@@ -15,7 +15,7 @@ PHONE_COL = os.getenv("PHONE_COL", "phone_number")
 CONTRACT_COL = os.getenv("CONTRACT_COL", "contract_code")
 DEFAULT_FIELDS = os.getenv(
     "DEFAULT_FIELDS",
-    "contract_code,platform,status,average_arpu,service_type,activation_date"
+    "contract_code,platform,status,average_arpu,service_type,activation_date,num_contact_tec,num_contact_amm,bb_active,user_name"
 ).split(",")
 
 # ── LOGGING ────────────────────────────────────────────────────────────────────
